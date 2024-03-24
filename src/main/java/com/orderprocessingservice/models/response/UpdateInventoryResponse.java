@@ -1,8 +1,6 @@
 package com.orderprocessingservice.models.response;
 
 import com.orderprocessingservice.models.common.ErrorResponse;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

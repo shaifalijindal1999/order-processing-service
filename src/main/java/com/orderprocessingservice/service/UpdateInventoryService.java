@@ -4,6 +4,7 @@ import com.orderprocessingservice.models.request.SubmitOrderRequest;
 import com.orderprocessingservice.models.response.UpdateInventoryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -11,12 +12,15 @@ import reactor.core.publisher.Mono;
 @Service
 public class UpdateInventoryService {
 
+    @Value("${inventory.service.base-url}")
+    private String inventoryServiceUri;
+
     private final Logger logger = LoggerFactory.getLogger(UpdateInventoryService.class);
     public void updateInventory(SubmitOrderRequest request, String orderId) {
-        WebClient webClient = WebClient.create("http://localhost:8888");
+        WebClient webClient = WebClient.create(inventoryServiceUri);
 
         Mono<UpdateInventoryResponse> responseMono = webClient.patch()
-                .uri("http://localhost:8888/update")
+                .uri("/update")
                 .bodyValue(request)
                 .retrieve()
                 .bodyToMono(UpdateInventoryResponse.class);
